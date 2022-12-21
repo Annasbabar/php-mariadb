@@ -1,0 +1,23 @@
+services:
+    web-server:
+        build: .
+        depends_on:
+            - db-server
+        volumes:
+            - ./crud_bootstrap:/var/www/html/
+        ports:
+            - 8080:80
+
+    db-server:
+        image: mariadb
+        restart: always
+        ports:
+          - 3453:3306
+        environment:
+            MARIADB_ROOT_PASSWORD: fazool
+            MARIADB_DATABASE: anas
+        volumes:
+            - db-data:/var/lib/mysql
+            - ./mariadb:/docker-entrypoint-initdb.d/
+volumes:
+  db-data:
